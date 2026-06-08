@@ -1,0 +1,2 @@
+catt:
+  device: "Living Room TV"   # Nom du device (obtenu via: catt scan)

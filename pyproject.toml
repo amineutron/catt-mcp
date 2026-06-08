@@ -1,0 +1,22 @@
+[project]
+name = "catt-mcp"
+version = "0.1.0"
+description = "MCP server for casting YouTube/media to Chromecast/DLNA via catt"
+readme = "README.md"
+authors = [{ name = "marouabah" }]
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.5.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+cache = ["lz4>=4.0.0"]
+
+[project.urls]
+Repository = "https://github.com/marouabah/catt-mcp"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
