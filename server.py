@@ -34,7 +34,7 @@ except ImportError:
 try:
     from mcp.server import Server
     from mcp.server.stdio import stdio_server
-    from mcp.types import Tool, TextContent
+    from mcp.types import TextContent, Tool
 except ImportError:
     print("Error: mcp package not installed. Run: pip install mcp", file=sys.stderr)
     sys.exit(1)
