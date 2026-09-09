@@ -41,11 +41,15 @@ except ImportError:
     sys.exit(1)
 
 
+# Adresse d'exemple (RFC 5737) : surcharger via TV_HOST ou config.yaml (tv.host)
+DEFAULT_TV_HOST = "192.0.2.10"
+
+
 def load_config() -> dict:
     """Charge la configuration depuis config.yaml."""
     config = {
         "device": os.environ.get("CATT_DEVICE", "55OLED705/12"),
-        "tv_host": os.environ.get("TV_HOST", "192.168.1.50"),
+        "tv_host": os.environ.get("TV_HOST", DEFAULT_TV_HOST),
         "adb_path": "/tmp/platform-tools/adb",
     }
 
@@ -70,7 +74,7 @@ def load_config() -> dict:
 class CattController:
     """Controleur pour catt - Cast vers Chromecast/DLNA."""
 
-    def __init__(self, device: str, tv_host: str = "192.168.1.50", adb_path: str = "/tmp/platform-tools/adb"):
+    def __init__(self, device: str, tv_host: str = DEFAULT_TV_HOST, adb_path: str = "/tmp/platform-tools/adb"):
         self.device = device
         self.tv_host = tv_host
         self.adb_path = adb_path
@@ -710,7 +714,7 @@ try:
 except ImportError:
     HAS_LZ4 = False
 
-TV_HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.1.50"
+TV_HOST = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("TV_HOST", DEFAULT_TV_HOST)
 ADB_PATH = sys.argv[2] if len(sys.argv) > 2 else "/tmp/platform-tools/adb"
 VIDEO_ID = sys.argv[3] if len(sys.argv) > 3 else ""
 OFFSET = float(sys.argv[4]) if len(sys.argv) > 4 else 3.3

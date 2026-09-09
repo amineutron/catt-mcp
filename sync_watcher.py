@@ -22,7 +22,8 @@ try:
 except ImportError:
     HAS_LZ4 = False
 
-TV_HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.1.50"
+# Adresse d'exemple (RFC 5737) : passer l'IP de la TV en argument ou via TV_HOST
+TV_HOST = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("TV_HOST", "192.0.2.10")
 ADB_PATH = sys.argv[2] if len(sys.argv) > 2 else "/tmp/platform-tools/adb"
 VIDEO_ID = sys.argv[3] if len(sys.argv) > 3 else ""
 OFFSET = float(sys.argv[4]) if len(sys.argv) > 4 else 3.3

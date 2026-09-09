@@ -71,6 +71,10 @@ Or with environment variable:
 CATT_DEVICE="55OLED705/12" python server.py
 ```
 
+The dual-screen tools (`dual_cast`, `dual_resync`, `dual_offset`) drive the TV through
+ADB and need its IP address. Set it with `TV_HOST` (or `tv.host` in `config.yaml`),
+for example `TV_HOST="192.0.2.10"`; the built-in default is only a placeholder.
+
 ## Claude Desktop Configuration
 
 ```json
