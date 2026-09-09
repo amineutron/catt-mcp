@@ -6,6 +6,12 @@ MCP server for casting YouTube videos and media to Chromecast/DLNA devices via [
 
 Exposes 15 tools covering YouTube casting, playback control, dual-screen sync, and device discovery.
 
+## Demo
+
+![MCP client: the 15 tools, then cast_scan finding the TV](docs/assets/demo.gif)
+
+Recorded on the real network with [`docs/demo/record.sh`](docs/demo/record.sh): a minimal MCP client ([`docs/demo/mcp_demo.py`](docs/demo/mcp_demo.py)) starts the server over stdio with `CATT_DEVICE` in the environment, lists the tools and calls `cast_scan` (read-only). Private IP addresses are replaced with documentation addresses.
+
 ## Tools
 
 <!-- tools:start -->
