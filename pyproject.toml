@@ -7,17 +7,27 @@ authors = [{ name = "amineutron", email = "amine.neutroncore@gmail.com" }]
 license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = [
-    "mcp>=1.5.0",
+    "mcp>=1.5,<2",
     "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
+dev = ["pytest>=8"]
 cache = ["lz4>=4.0.0"]
 
 [project.urls]
 Homepage = "https://github.com/amineutron/catt-mcp"
 Repository = "https://github.com/amineutron/catt-mcp"
 Issues = "https://github.com/amineutron/catt-mcp/issues"
+
+[project.scripts]
+catt-mcp = "server:cli"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["server.py", "sync_watcher.py"]
+
+[tool.hatch.build.targets.sdist]
+include = ["server.py", "README.md", "LICENSE", "config.example.yaml", "tests/", "sync_watcher.py"]
 
 [build-system]
 requires = ["hatchling"]

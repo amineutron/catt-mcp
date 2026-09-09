@@ -47,27 +47,31 @@ DEFAULT_TV_HOST = "192.0.2.10"
 
 def load_config() -> dict:
     """Charge la configuration depuis config.yaml."""
+    import shutil
+    # Ordre de resolution : variables d'environnement, puis YAML (CATT_CONFIG, ./config.yaml,
+    # config.yaml a cote du serveur, ou celui de Lyra si le serveur vit dans son arborescence).
     config = {
-        "device": os.environ.get("CATT_DEVICE", "55OLED705/12"),
-        "tv_host": os.environ.get("TV_HOST", DEFAULT_TV_HOST),
-        "adb_path": "/tmp/platform-tools/adb",
+        "device": os.environ.get("CATT_DEVICE", ""),
+        "tv_host": os.environ.get("TV_HOST", ""),
+        "adb_path": os.environ.get("ADB_PATH", "") or shutil.which("adb") or "/tmp/platform-tools/adb",
     }
-
-    # Essayer de charger depuis config.yaml de Lyra
-    config_path = Path(__file__).parent.parent.parent / "config.yaml"
-    if config_path.exists():
+    candidates = [Path(p) for p in (os.environ.get("CATT_CONFIG", ""),) if p]
+    candidates += [Path.cwd() / "config.yaml", Path(__file__).parent / "config.yaml",
+                   Path(__file__).parent.parent.parent / "config.yaml"]
+    config_path = next((c for c in candidates if c.exists()), None)
+    if config_path is not None:
         try:
             import yaml
             with open(config_path) as f:
-                cfg = yaml.safe_load(f)
-            catt_cfg = cfg.get("catt", {})
-            config["device"] = catt_cfg.get("device", config["device"])
-            # Recuperer l'IP de la TV pour ADB
-            tv_cfg = cfg.get("tv", {})
-            config["tv_host"] = tv_cfg.get("host", config["tv_host"])
+                cfg = yaml.safe_load(f) or {}
+            catt_cfg = cfg.get("catt", {}) or {}
+            tv_cfg = cfg.get("tv", {}) or {}
+            config["device"] = config["device"] or catt_cfg.get("device", "")
+            config["tv_host"] = config["tv_host"] or tv_cfg.get("host", "")
         except Exception as e:
-            print(f"Warning: Could not load config.yaml: {e}", file=sys.stderr)
-
+            print(f"Warning: Could not load {config_path}: {e}", file=sys.stderr)
+    config["device"] = config["device"] or "Chromecast"
+    config["tv_host"] = config["tv_host"] or DEFAULT_TV_HOST
     return config
 
 
@@ -1308,3 +1312,9 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+def cli() -> None:
+    """Point d'entree console (pip/uvx) : lance le serveur MCP sur stdio."""
+    import asyncio as _asyncio
+    _asyncio.run(main())
