@@ -3,7 +3,7 @@ name = "catt-mcp"
 version = "0.1.0"
 description = "MCP server for casting YouTube/media to Chromecast/DLNA via catt"
 readme = "README.md"
-authors = [{ name = "marouabah" }]
+authors = [{ name = "amineutron", email = "amine.neutroncore@gmail.com" }]
 license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = [
@@ -15,7 +15,9 @@ dependencies = [
 cache = ["lz4>=4.0.0"]
 
 [project.urls]
-Repository = "https://github.com/marouabah/catt-mcp"
+Homepage = "https://github.com/amineutron/catt-mcp"
+Repository = "https://github.com/amineutron/catt-mcp"
+Issues = "https://github.com/amineutron/catt-mcp/issues"
 
 [build-system]
 requires = ["hatchling"]
