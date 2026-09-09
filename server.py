@@ -22,7 +22,6 @@ import re
 import shutil
 import subprocess
 import sys
-import time
 from pathlib import Path
 from typing import Optional
 
@@ -212,7 +211,7 @@ class CattController:
         """Valide une URL de cast. Retourne un message d'erreur ou None si OK."""
         from urllib.parse import urlparse
         if not any(url.startswith(s) for s in self._ALLOWED_SCHEMES):
-            return f"Scheme non autorise. Utiliser http:// ou https://"
+            return "Scheme non autorise. Utiliser http:// ou https://"
         try:
             host = urlparse(url).hostname or ""
         except Exception:
@@ -312,7 +311,7 @@ class CattController:
                 if output:
                     lines = output.split("\n")
                     # Filtrer la ligne "Scanning..."
-                    devices = [l for l in lines if l and "Scanning" not in l]
+                    devices = [line for line in lines if line and "Scanning" not in line]
                     if devices:
                         return "Devices:\n" + "\n".join(devices)
                 return "Aucun device trouve"

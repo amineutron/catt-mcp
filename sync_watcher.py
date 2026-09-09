@@ -8,8 +8,6 @@ Methode "Pause-Play calibre":
 - Le delai compense la latence ADB
 """
 
-import glob
-import json
 import os
 import re
 import subprocess
@@ -17,7 +15,9 @@ import sys
 import time
 
 try:
-    import lz4.block
+    import importlib.util
+    if importlib.util.find_spec("lz4") is None:
+        raise ImportError("lz4")
     HAS_LZ4 = True
 except ImportError:
     HAS_LZ4 = False
@@ -59,7 +59,7 @@ def tv_control(action):
             capture_output=True, timeout=5
         )
         return True
-    except:
+    except Exception:
         return False
 
 def tv_launch_at_position(video_id, position):
@@ -72,7 +72,7 @@ def tv_launch_at_position(video_id, position):
             capture_output=True, timeout=15
         )
         return True
-    except:
+    except Exception:
         return False
 
 def get_firefox_status():
@@ -89,7 +89,7 @@ def get_firefox_status():
         ).stdout.strip()
 
         return status, float(pos) if pos else 0
-    except:
+    except Exception:
         return None, 0
 
 def get_firefox_window_title():
@@ -113,7 +113,7 @@ def get_firefox_window_title():
                         break
                 return title
         return None
-    except:
+    except Exception:
         return None
 
 def get_youtube_video_id():
@@ -143,7 +143,7 @@ def firefox_control(action):
             capture_output=True, timeout=5
         )
         return True
-    except:
+    except Exception:
         return False
 
 def firefox_seek(position):
@@ -154,7 +154,7 @@ def firefox_seek(position):
             capture_output=True, timeout=5
         )
         return True
-    except:
+    except Exception:
         return False
 
 def sync_play():
@@ -210,7 +210,7 @@ def resync_after_seek(video_id, target_position):
 def main():
     global VIDEO_ID
 
-    print(f"Sync Watcher v2 - Precision <0.3s", file=sys.stderr)
+    print("Sync Watcher v2 - Precision <0.3s", file=sys.stderr)
     print(f"TV: {TV_HOST}, Video: {VIDEO_ID}", file=sys.stderr)
     print(f"TV_LATENCY: {TV_LATENCY*1000:.0f}ms, SEEK_THRESHOLD: {SEEK_THRESHOLD}s", file=sys.stderr)
 
@@ -229,7 +229,7 @@ def main():
             current_window_title = get_firefox_window_title()
             if current_window_title and last_window_title:
                 if current_window_title != last_window_title and "YouTube" in current_window_title:
-                    print(f"CHANGEMENT VIDEO detecte!", file=sys.stderr)
+                    print("CHANGEMENT VIDEO detecte!", file=sys.stderr)
                     print(f"  Ancien: {last_window_title[:50]}", file=sys.stderr)
                     print(f"  Nouveau: {current_window_title[:50]}", file=sys.stderr)
 
