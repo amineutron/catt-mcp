@@ -35,6 +35,7 @@ try:
     from mcp.server import Server, ServerRequestContext
     from mcp.server.stdio import stdio_server
     from mcp.types import (
+        ToolAnnotations,
         CallToolRequestParams,
         CallToolResult,
         ListToolsResult,
@@ -1115,11 +1116,21 @@ if __name__ == "__main__":
 catt: CattController = None
 
 
+# Profils d'annotations MCP (ToolAnnotations) : ils disent au client ce que fait
+# un outil avant de l'appeler. Aucun outil de ce serveur n'ecrase de donnee,
+# donc destructiveHint reste False ; la distinction utile est la lecture seule
+# et l'idempotence (rejouable sans effet cumulatif).
+_READ = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=True)
+_SET = ToolAnnotations(readOnlyHint=False, destructiveHint=False, idempotentHint=True, openWorldHint=True)
+_ACTION = ToolAnnotations(readOnlyHint=False, destructiveHint=False, idempotentHint=False, openWorldHint=True)
+
+
 def list_tools() -> list[Tool]:
     """Liste les outils disponibles."""
     return [
         Tool(
             name="cast_youtube",
+            annotations=_ACTION,
             description="Caste une video YouTube sur la TV (URL ou ID de video)",
             inputSchema={
                 "type": "object",
@@ -1134,6 +1145,7 @@ def list_tools() -> list[Tool]:
         ),
         Tool(
             name="cast_url",
+            annotations=_ACTION,
             description="Caste une URL quelconque (video, audio, stream) sur la TV",
             inputSchema={
                 "type": "object",
@@ -1148,21 +1160,25 @@ def list_tools() -> list[Tool]:
         ),
         Tool(
             name="cast_stop",
+            annotations=_SET,
             description="Arrete le cast en cours sur la TV",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_pause",
+            annotations=_SET,
             description="Met en pause le cast en cours",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_resume",
+            annotations=_SET,
             description="Reprend la lecture du cast",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_volume",
+            annotations=_SET,
             description="Regle le volume du cast (0-100)",
             inputSchema={
                 "type": "object",
@@ -1179,6 +1195,7 @@ def list_tools() -> list[Tool]:
         ),
         Tool(
             name="cast_seek",
+            annotations=_SET,
             description="Avance ou recule dans la video",
             inputSchema={
                 "type": "object",
@@ -1193,41 +1210,49 @@ def list_tools() -> list[Tool]:
         ),
         Tool(
             name="cast_status",
+            annotations=_READ,
             description="Retourne le statut du cast en cours",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_scan",
+            annotations=_READ,
             description="Scanne les devices Chromecast/DLNA disponibles sur le reseau",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_info",
+            annotations=_READ,
             description="Retourne les infos detaillees du media en cours",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_browser",
+            annotations=_ACTION,
             description="Caste la video de l'onglet actif de Firefox sur la TV (YouTube, Twitch, etc.)",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_browser_dual",
+            annotations=_ACTION,
             description="Lance la video sur PC (Firefox) ET TV simultanement avec synchronisation (pour LightBeat)",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_dual_resync",
+            annotations=_ACTION,
             description="Resynchronise PC et TV en relancant la TV a la position Firefox",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_dual_stop",
+            annotations=_SET,
             description="Arrete le dual cast et le watcher de synchronisation",
             inputSchema={"type": "object", "properties": {}, "required": []}
         ),
         Tool(
             name="cast_dual_offset",
+            annotations=_SET,
             description="Ajuste le decalage TV (positif=TV en avance, negatif=TV en retard)",
             inputSchema={
                 "type": "object",
