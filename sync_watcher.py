@@ -8,6 +8,7 @@ Methode "Pause-Play calibre":
 - Le delai compense la latence ADB
 """
 
+import json
 import os
 import re
 import subprocess

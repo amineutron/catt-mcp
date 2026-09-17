@@ -42,6 +42,20 @@ Recorded on the real network with [`docs/demo/record.sh`](docs/demo/record.sh): 
 - A Chromecast or DLNA-compatible device on the same network
 - `lz4` (optional, for cache compression): `pip install lz4`
 
+### Dual cast (Linux + Hyprland)
+
+`cast_browser`, `cast_browser_dual`, `cast_dual_resync`, `cast_dual_stop` and
+`cast_dual_offset` drive Firefox from the running desktop session. They are
+advertised **only** when the required binaries are present:
+
+- [Hyprland](https://hyprland.org/) with `hyprctl` in `PATH`
+- `playerctl` for MPRIS playback control
+- Firefox holding the video to mirror
+- `lz4` (Python) to read Firefox's session cache
+
+Without them the server starts normally and simply does not expose these five
+tools, instead of failing when they are called.
+
 ## Setup
 
 ### 1. Install dependencies
