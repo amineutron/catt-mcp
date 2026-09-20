@@ -34,6 +34,10 @@ Recorded on the real network with [`docs/demo/record.sh`](docs/demo/record.sh): 
 | `cast_dual_offset` | Ajuste le decalage TV (positif=TV en avance, negatif=TV en retard) |
 <!-- tools:end -->
 
+### YouTube ID extraction
+
+`_extract_video_id` (URL `watch?v=`, `youtu.be/`, `shorts/` or a bare 11-character ID, anything else rejected before it reaches `catt`/ADB) is deliberately duplicated in [pylips-mcp](https://github.com/amineutron/pylips-mcp) (`youtube_video`, TV app with Premium account). Both servers stay installable on their own; each one tests its copy with the same table of cases (`tests/test_youtube_id.py`). Decision recorded on 2026-09-20.
+
 ## Requirements
 
 - Python 3.10+
