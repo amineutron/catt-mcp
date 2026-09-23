@@ -60,6 +60,18 @@ advertised **only** when the required binaries are present:
 Without them the server starts normally and simply does not expose these five
 tools, instead of failing when they are called.
 
+## Installation en une ligne
+
+```bash
+uvx catt-mcp                 # depuis PyPI ; avant publication : uvx --from git+https://github.com/amineutron/catt-mcp catt-mcp
+```
+
+Configuration Claude Desktop / Claude Code (`mcpServers`) :
+
+```json
+{ "catt": { "command": "uvx", "args": ["catt-mcp"], "env": { "CATT_DEVICE": "Living Room TV" } } }
+```
+
 ## Setup
 
 ### 1. Install dependencies
