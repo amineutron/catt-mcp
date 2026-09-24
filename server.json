@@ -1,0 +1,46 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.amineutron/catt-mcp",
+  "title": "Chromecast / DLNA casting (catt)",
+  "description": "Cast YouTube videos and media to a Chromecast or DLNA device with catt, and control playback.",
+  "repository": {
+    "url": "https://github.com/amineutron/catt-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://github.com/amineutron/catt-mcp#readme",
+  "version": "0.2.1",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "catt-mcp",
+      "runtimeHint": "uvx",
+      "version": "0.2.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "CATT_DEVICE",
+          "description": "Name or IP of the default Chromecast / DLNA device",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        },
+        {
+          "name": "TV_HOST",
+          "description": "Optional Android TV IP, used to wake the screen over ADB before casting",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        },
+        {
+          "name": "ADB_PATH",
+          "description": "Path to the adb binary if not on PATH",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}

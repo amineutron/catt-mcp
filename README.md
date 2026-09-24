@@ -1,4 +1,5 @@
 # catt-mcp
+<!-- mcp-name: io.github.amineutron/catt-mcp -->
 
 [![tests](https://github.com/amineutron/catt-mcp/actions/workflows/tests.yml/badge.svg)](https://github.com/amineutron/catt-mcp/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 
