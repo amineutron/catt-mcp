@@ -101,14 +101,19 @@ catt:
 ### 4. Run
 
 ```bash
-python server.py
+catt-mcp                      # installed (pip, uvx) ; `catt-mcp --help` lists the settings
+python -m catt_mcp            # same thing, from any environment where the package is installed
+python server.py              # from a clone, without installing (thin launcher, code in catt_mcp/)
 ```
 
 Or with environment variable:
 
 ```bash
-CATT_DEVICE="55OLED705/12" python server.py
+CATT_DEVICE="55OLED705/12" catt-mcp
 ```
+
+The code lives in the `catt_mcp` package (`catt_mcp/server.py`, `catt_mcp/sync_watcher.py`),
+so it can be installed next to other MCP servers without module name clashes.
 
 The dual-screen tools (`dual_cast`, `dual_resync`, `dual_offset`) drive the TV through
 ADB and need its IP address. Set it with `TV_HOST` (or `tv.host` in `config.yaml`),

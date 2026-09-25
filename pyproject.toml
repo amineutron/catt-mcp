@@ -1,6 +1,6 @@
 [project]
 name = "catt-mcp"
-version = "0.2.1"
+version = "0.3.0"
 description = "MCP server for casting YouTube/media to Chromecast/DLNA via catt"
 readme = "README.md"
 authors = [{ name = "amineutron", email = "amine.neutroncore@gmail.com" }]
@@ -21,13 +21,13 @@ Repository = "https://github.com/amineutron/catt-mcp"
 Issues = "https://github.com/amineutron/catt-mcp/issues"
 
 [project.scripts]
-catt-mcp = "server:cli"
+catt-mcp = "catt_mcp.server:cli"
 
 [tool.hatch.build.targets.wheel]
-only-include = ["server.py", "sync_watcher.py"]
+packages = ["catt_mcp"]
 
 [tool.hatch.build.targets.sdist]
-include = ["server.py", "README.md", "LICENSE", "config.example.yaml", "tests/", "sync_watcher.py"]
+include = ["catt_mcp/", "server.py", "README.md", "LICENSE", "config.example.yaml", "tests/"]
 
 [build-system]
 requires = ["hatchling"]

@@ -2,6 +2,17 @@
 
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versions [SemVer](https://semver.org/lang/fr/).
 
+## [0.3.0] - 2026-09-25
+
+### Modifié
+
+- The code now lives in a `catt_mcp` package (`catt_mcp.server`, `catt_mcp.sync_watcher`). The wheel used to install top-level `server` and `sync_watcher` modules, which overwrote each other with other MCP servers (denon-mcp, pylips-mcp) installed in the same environment. `python server.py` from a clone still works (thin launcher), and `python -m catt_mcp` is new.
+- The sync watcher is started as a module (`python -m catt_mcp.sync_watcher`) instead of by file path.
+
+### Corrigé
+
+- `catt-mcp --help` and `--version` answer without any configuration (they used to start the server).
+
 ## [0.2.1] - 2026-09-24
 
 ### Ajouté

@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from server import CattController as Controleur  # noqa: E402
+from catt_mcp.server import CattController as Controleur  # noqa: E402
 
 
 def _etat(pid: int) -> str:
